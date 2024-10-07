@@ -5,13 +5,14 @@ import { Volume2, VolumeX } from 'react-feather';
 import VisuallyHidden from '../VisuallyHidden';
 import MaxWidthWrapper from '../MaxWidthWrapper';
 import styles from './Header.module.css';
+import { MuteContext } from '../MuteProvider/MuteProvider';
+
 
 function Header() {
   const id = React.useId();
+  const { isMuted,setIsMuted } = React.useContext(MuteContext)
 
   // TODO: Global state?
-  const soundEnabled = true;
-
   return (
     <header className={styles.wrapper}>
       <MaxWidthWrapper
@@ -22,15 +23,16 @@ function Header() {
         <button
           onClick={() => {
             // TODO: flip `soundEnabled`
+            setIsMuted((prevVal) => {return !prevVal})
           }}
         >
-          {soundEnabled ? (
+          {!isMuted ? (
             <Volume2 />
           ) : (
             <VolumeX />
           )}
           <VisuallyHidden>
-            {soundEnabled
+            {!isMuted
               ? 'Disable sound effects'
               : 'Enable sound effects'}
           </VisuallyHidden>
